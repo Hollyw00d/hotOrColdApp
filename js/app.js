@@ -21,7 +21,8 @@ $(function(){
 			/*--- Hide information modal box ---*/
 			$("a.close").click(function(){
 				$(".overlay").fadeOut(1000);
-		});
+			});
+		}
 		instructionsOverlay();
 
 		// Resets all data on page to start new game
