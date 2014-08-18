@@ -21,8 +21,7 @@ $(function(){
 			/*--- Hide information modal box ---*/
 			$("a.close").click(function(){
 				$(".overlay").fadeOut(1000);
-			});
-		}
+		});
 		instructionsOverlay();
 
 		// Resets all data on page to start new game
@@ -66,7 +65,7 @@ $(function(){
 				else if(Math.abs(randomNum - userNum) < 5 && Math.abs(randomNum - userNum) > 0) {
 					feedback.html("You're very hot!");
 				}
-				else if(randomNum === userNum) {
+				else if(randomNum == userNum) {
 					feedback.html("You are correct!");
 				}
 
