@@ -66,7 +66,7 @@ $(function(){
 				else if(Math.abs(randomNum - userNum) < 5 && Math.abs(randomNum - userNum) > 0) {
 					feedback.html("You're very hot!");
 				}
-				else if(randomNum === userNum) {
+				else if(randomNum == userNum) {
 					feedback.html("You are correct!");
 				}
 
