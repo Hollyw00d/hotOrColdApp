@@ -1,17 +1,13 @@
-// Start Anonymous Function
-(function() {
-// Start jQuery
 $(function(){
 
-	// Generate random number & validate guesses with min being 1 and max being 100
-	function generateValidateNumber() {
+
 
 		// Get user number
 		var userNum = $("#userGuess").val();
 		// Error or Success Message Feedback
 		var feedback = $("#feedback");
 
-		function instructionsOverlay() {
+
 			/*--- Display information modal box ---*/
 			$(".what").click(function(){
 				$(".overlay").fadeIn(1000);
@@ -22,11 +18,10 @@ $(function(){
 			$("a.close").click(function(){
 				$(".overlay").fadeOut(1000);
 			});
-		}
-		instructionsOverlay();
+
+
 
 		// Resets all data on page to start new game
-		function newGame() {
 			$(".new").on("click", function(event) {
 				event.preventDefault();
 				$("h1").html("HOT or COLD");
@@ -35,10 +30,9 @@ $(function(){
 				$("#count").html("0");
 
 			});
-		}
-		newGame();
 
-		function errorValidation() {
+
+
 			// On submit error, hot, cold & success messages of user number guesses
 			$("#guessButton").on("click", function(event) {
 				event.preventDefault();
@@ -72,18 +66,11 @@ $(function(){
 
 			});
 
-		}
-		errorValidation();
 
 
 
 
-	}
-	generateValidateNumber();
 
 
 
-// End jQuery
 });
-// End Anonymous Function
-})();
