@@ -34,8 +34,10 @@ $(function(){
 //			});
 
 		// Constructor to reset game after clicking "New Game"
-		function NewGame(newGameBtn, mainHeading, successOrVictoryMsg, userGuess, guessCount) {
+		function NewGame(newGameBtn, min, max, mainHeading, successOrVictoryMsg, userGuess, guessCount) {
 			this.newGameBtn = newGameBtn;
+			this.min = min;
+			this.max = max;
 //			this.randomNum = function() {
 //				return Math.floor(Math.random() * (100) + 1);
 //			};
@@ -46,8 +48,9 @@ $(function(){
 			this.startNewGame = function() {
 				return $(newGameBtn).on("click", function(event) {
 					event.preventDefault();
+					var randomNum = Math.floor(Math.random() * (max - min + 1)) + min;
 					$(mainHeading).html("HOT or COLD");
-					$(successOrVictoryMsg).html("Make your Guess!");
+					$(successOrVictoryMsg).html("Make your Guess!" + randomNum);
 					$(userGuess).val("");
 					$(guessCount).html("0");
 				});
@@ -58,7 +61,7 @@ $(function(){
 
 		// Instantiate NewGame class and then call startNewGame method from class including
 		// setting random number
-		var restartGame = new NewGame(".new", "h1", "#feedback", "#userGuess", "#count");
+		var restartGame = new NewGame(".new", 1, 100, "h1", "#feedback", "#userGuess", "#count");
 		restartGame.startNewGame();
 
 
