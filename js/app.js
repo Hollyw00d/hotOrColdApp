@@ -1,17 +1,13 @@
-// Start Anonymous Function
-(function() {
-// Start jQuery
 $(function(){
 
-	// Generate random number & validate guesses with min being 1 and max being 100
-	function generateValidateNumber() {
+
 
 		// Get user number
 		var userNum = $("#userGuess").val();
 		// Error or Success Message Feedback
 		var feedback = $("#feedback");
 
-		function instructionsOverlay() {
+
 			/*--- Display information modal box ---*/
 			$(".what").click(function(){
 				$(".overlay").fadeIn(1000);
@@ -22,29 +18,62 @@ $(function(){
 			$("a.close").click(function(){
 				$(".overlay").fadeOut(1000);
 			});
-		}
-		instructionsOverlay();
+
+
 
 		// Resets all data on page to start new game
-		function newGame() {
-			$(".new").on("click", function(event) {
-				event.preventDefault();
-				$("h1").html("HOT or COLD");
-				$("#feedback").html("Make your Guess!");
-				$("#userGuess").val("");
-				$("#count").html("0");
 
-			});
+
+//			$(".new").on("click", function(event) {
+//				event.preventDefault();
+//				$("h1").html("HOT or COLD");
+//				$("#feedback").html("Make your Guess!");
+//				$("#userGuess").val("");
+//				$("#count").html("0");
+//
+//			});
+
+		// Constructor to reset game after clicking "New Game"
+		function NewGame(newGameBtn, min, max, mainHeading, successOrVictoryMsg, userGuess, guessCount) {
+			this.newGameBtn = newGameBtn;
+			this.min = min;
+			this.max = max;
+//			this.randomNum = function() {
+//				return Math.floor(Math.random() * (100) + 1);
+//			};
+			this.mainHeading = mainHeading;
+			this.successOrVictoryMsg = successOrVictoryMsg;
+			this.userGuess = userGuess;
+			this.guessCount = guessCount;
+			this.startNewGame = function() {
+				return $(newGameBtn).on("click", function(event) {
+					event.preventDefault();
+					var randomNum = Math.floor(Math.random() * (max - min + 1)) + min;
+					$(mainHeading).html("HOT or COLD");
+					$(successOrVictoryMsg).html("Make your Guess!" + randomNum);
+					$(userGuess).val("");
+					$(guessCount).html("0");
+				});
+
+			}
+
 		}
-		newGame();
 
-		function errorValidation() {
+		// Instantiate NewGame class and then call startNewGame method from class including
+		// setting random number
+		var restartGame = new NewGame(".new", 1, 100, "h1", "#feedback", "#userGuess", "#count");
+		restartGame.startNewGame();
+
+
+
+
+
 			// On submit error, hot, cold & success messages of user number guesses
 			$("#guessButton").on("click", function(event) {
 				event.preventDefault();
 
 				// Reset & generate random number from 1-100
-				var randomNum = Math.floor(Math.random() * (100) + 1);
+				//var randomNum = Math.floor(Math.random() * (100) + 1);
 
 				// Show answer
 				$("h1").html("ANSWER: " + randomNum);
@@ -72,18 +101,11 @@ $(function(){
 
 			});
 
-		}
-		errorValidation();
 
 
 
 
-	}
-	generateValidateNumber();
 
 
 
-// End jQuery
 });
-// End Anonymous Function
-})();
