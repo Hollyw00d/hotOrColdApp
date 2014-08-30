@@ -1,5 +1,5 @@
 $(function(){
-
+ 
 			// Display information modal box
 			$(".what").click(function(){
 				$(".overlay").fadeIn(1000);
@@ -40,7 +40,7 @@ $(function(){
 					var count = 0;
 
 					$(guessButton).on("click", function(event) {
-						event.preventDefault();
+					    event.preventDefault();
 
 						var userGuessNum = $("#userGuess").val();
 						var successOrVictoryMsgClick = $("#feedback");
