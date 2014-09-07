@@ -1,4 +1,17 @@
 $(function(){
+
+  // Display information modal box
+  $(".what").click(function(event){
+    event.preventDefault();
+    $(".overlay").fadeIn(1000);
+  });
+
+  // Hide information modal box
+  $("a.close").click(function(event){
+    event.preventDefault();
+    $(".overlay").fadeOut(1000);
+  });
+
   // Very simple class, with min and max defined inside the class itself.
   function Game() {
     this.min = 1;
@@ -26,6 +39,7 @@ $(function(){
   // Set a click listener for the New Game button.
   // Your implementation may be different.
   $("#newGame").on("click", function(event) {
+    event.preventDefault();
     // Replace the current game with a new one.
     currentGame = new Game();
 
@@ -41,6 +55,7 @@ $(function(){
 // Set a click listener for the Make Guess button.
 // Your implementation may be different.
   $("#makeGuess").on("click", function(event) {
+    event.preventDefault();
     // Get the guess from the input
     var guess = $("#guess").val();
 
