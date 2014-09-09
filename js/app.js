@@ -1,3 +1,5 @@
+// ** QUESTIONS START WITH 5 HASHES (#####)
+
 $(function(){
 
   // Display information modal box
@@ -25,6 +27,7 @@ $(function(){
     // For debugging purposes, let's log randomNum to the console.
     console.log(this.randomNum);
 
+
     // Function to check if a guess is correct.
     // Notice that the value of this.randomNum never leaves this class.
     // This is an important OOP principle called encapsulation.
@@ -41,6 +44,8 @@ $(function(){
   $("#newGame").on("click", function(event) {
     event.preventDefault();
     // Replace the current game with a new one.
+
+    //##### 1. Is this an private instance of the "Game" object?
     currentGame = new Game();
 
     // Reset the form back to an empty state.
@@ -54,7 +59,7 @@ $(function(){
     $("#guess").removeAttr("disabled");
   });
 
-// Start counter at zero to keep track of guesses until victory
+  //##### 2. Once again why does the "count" variable need to be outside of the "makeGuess" on click function?
 var count = 0;
 
 // Set a click listener for the Make Guess button.
@@ -67,12 +72,15 @@ var count = 0;
 
 
     // Using the context of the current game, call the makeGuess() function
+    //##### 3. What is the value of "result"? Could I have used my "currentRandomNum" variable on line 79 instead?
     var result = currentGame.makeGuess(guess);
 
 
     var currentRandomNum = currentGame.randomNum;
 
     // Build the list element
+
+    //##### 4. I don't understand what the tertiary operator is doing on line 85.
     var listElement = $("<li>").html(guess).
         css("color", result ? 'green' : 'red');
 
