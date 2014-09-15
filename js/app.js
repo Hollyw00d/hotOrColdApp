@@ -22,10 +22,11 @@ $(function(){
     // Notice the use of the this keyword.
     // A new (and hopefully different) randomNum will be generated
     // with each instance of the class.
-    this.randomNum = Math.floor(Math.random() * (this.max - this.min + 1)) + this.min;
+    this.randomNum = Math.floor(Math.random() * (this.max - this.min + 1)) +
+        this.min;
 
     // For debugging purposes, let's log randomNum to the console.
-    console.log(this.randomNum);
+    console.log("Random Num: " + this.randomNum);
 
 
     // Function to check if a guess is correct.
@@ -45,13 +46,20 @@ $(function(){
     event.preventDefault();
     // Replace the current game with a new one.
 
-    //##### 1. Is this an private instance of the "Game" object?
+    //##### 1. Is line 50 a private instance of the "Game" object?
     currentGame = new Game();
 
     // Reset the form back to an empty state.
     // This is just to make the application useable
     // and your implementation may be different.
     $("#feedback").html("Make your Guess!");
+
+
+    //##### 2. When I click on the "#newGame" link to reset the game, the #count
+    // value on line 63 gets set to 0. However, when I start playing
+    // a new game the #count value goes up one from the from the
+    // previous value it was on.
+    // How do I fix this problem?
     $("#count").html("0");
     $("#guessList").html("");
     $("#guess").val("");
@@ -59,8 +67,9 @@ $(function(){
     $("#guess").removeAttr("disabled");
   });
 
-  //##### 2. Once again why does the "count" variable need to be outside of the "makeGuess" on click function?
-var count = 0;
+  //##### 3. Once again why does the "count" variable on line 72 need to be
+  // outside of the "makeGuess" on click function on line 76?
+  var count = 0;
 
 // Set a click listener for the Make Guess button.
 // Your implementation may be different.
@@ -72,15 +81,16 @@ var count = 0;
 
 
     // Using the context of the current game, call the makeGuess() function
-    //##### 3. What is the value of "result"? Could I have used my "currentRandomNum" variable on line 79 instead?
+    //##### 4. On line 86, what is the value of the "result" variable?
+    // Could I have used my "currentRandomNum" variable on line 88 instead?
     var result = currentGame.makeGuess(guess);
-
 
     var currentRandomNum = currentGame.randomNum;
 
     // Build the list element
 
-    //##### 4. I don't understand what the tertiary operator is doing on line 85.
+    //##### 5. I don't understand what the tertiary operator is doing
+    // on line 95.
     var listElement = $("<li>").html(guess).
         css("color", result ? 'green' : 'red');
 
@@ -95,19 +105,22 @@ var count = 0;
     // Error validation message area
     var successOrVictoryMsgClick = $("#feedback");
 
-
     // Count the number of guesses until success
     var guessCountNum = $("#count");
     if(currentRandomNum != guess) {
       count++;
       guessCountNum.html(count);
+      console.log("Guess Count: " + count);
     }
 
     // Form validation if the numbers 1-100 aren't entered
     // Form submit success and error messages
-    if(isNaN(guess) || guess != Math.floor(guess) || guess > 100 || guess < 1 || guess == "") {
-      successOrVictoryMsgClick.html("Sorry, you need to enter a whole number from 1 - 100 inclusive. Please try again.");
-      // If number that is NOT 1-100 is entered then remove the blank guess which is an empty LI tag
+    if(isNaN(guess) || guess != Math.floor(guess) || guess > 100 ||
+        guess < 1 || guess == "") {
+      successOrVictoryMsgClick.html("Sorry, you need to enter a whole number " +
+          "from 1 - 100 inclusive. Please try again.");
+      // If number that is NOT 1-100 is entered then remove the blank guess
+      // which is an empty LI tag
       if(!$.trim($("selector").html())) {
         $(listElement).remove();
       }
@@ -115,23 +128,25 @@ var count = 0;
     else if(Math.abs(currentRandomNum - guess) > 30) {
       successOrVictoryMsgClick.html("You're very cold");
     }
-    else if(Math.abs(currentRandomNum - guess) < 30 && Math.abs(currentRandomNum - guess) > 15) {
+    else if(Math.abs(currentRandomNum - guess) < 30 && Math.abs(
+      currentRandomNum - guess) > 15) {
       successOrVictoryMsgClick.html("You're getting warmer");
     }
-    else if(Math.abs(currentRandomNum - guess) < 15 && Math.abs(currentRandomNum - guess) > 5) {
+    else if(Math.abs(currentRandomNum - guess) < 15 && Math.abs(
+      currentRandomNum - guess) > 5) {
       successOrVictoryMsgClick.html("You're getting hotter");
     }
-    else if(Math.abs(currentRandomNum - currentRandomNum) < 5 && Math.abs(currentRandomNum - guess) > 0) {
+    else if(Math.abs(currentRandomNum - currentRandomNum) < 5 && Math.abs(
+        currentRandomNum - guess) > 0) {
       successOrVictoryMsgClick.html("You're very hot!");
     }
 
     //Success message!
     else if(Math.abs(currentRandomNum - currentRandomNum == 0)) {
-      successOrVictoryMsgClick.html("You win! The number was " + currentRandomNum + ".");
+      successOrVictoryMsgClick.html("You win! The number was " +
+        currentRandomNum + ".");
       $("#count").html(count + 1);
     }
-
-
 
   });
   
