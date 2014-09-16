@@ -1,5 +1,3 @@
-// ** QUESTIONS START WITH 5 HASHES (#####)
-
 $(function(){
 
   // Display information modal box
@@ -14,80 +12,75 @@ $(function(){
     $(".overlay").fadeOut(1000);
   });
 
-  // Very simple class, with min and max defined inside the class itself.
+  // Class that defines variables or a new game
+  // including min num, max num, random num and a
+  // method to see if the random num is the same as the guess num
   function Game() {
     this.min = 1;
     this.max = 100;
 
-    // Notice the use of the this keyword.
-    // A new (and hopefully different) randomNum will be generated
-    // with each instance of the class.
-    this.randomNum = Math.floor(Math.random() * (this.max - this.min + 1)) + this.min;
+    // Random num property from 1 - 100 inclusive
+    this.randomNum = Math.floor(Math.random() * (this.max - this.min + 1)) +
+        this.min;
 
-    // For debugging purposes, let's log randomNum to the console.
-    console.log(this.randomNum);
-
-
-    // Function to check if a guess is correct.
-    // Notice that the value of this.randomNum never leaves this class.
-    // This is an important OOP principle called encapsulation.
+    // Method to check if a guess is the same as the random num
     this.makeGuess = function(guess) {
       return this.randomNum == guess;
     };
   }
 
-  // Creating a new Game just once upon first execution of code.
+  // Instantiate the "Game" class
   var currentGame = new Game();
 
-  // Set a click listener for the New Game button.
-  // Your implementation may be different.
+  // Set guess tracker "count" variable to zero
+  var count = 0;
+
+  // Set a click listener for the "New Game" button
   $("#newGame").on("click", function(event) {
     event.preventDefault();
-    // Replace the current game with a new one.
 
-    //##### 1. Is this an private instance of the "Game" object?
+    // Replace the current game with a new one
     currentGame = new Game();
 
-    // Reset the form back to an empty state.
-    // This is just to make the application useable
-    // and your implementation may be different.
+    // Reset the form but to it's empty state
     $("#feedback").html("Make your Guess!");
+
+    // For new games set guess tracker "count" variable to zero
+    count = 0;
+
     $("#count").html("0");
     $("#guessList").html("");
-    $("#guess").val("");
+    $("#guess").val("").removeAttr("disabled");
     $("#makeGuess").removeAttr("disabled");
-    $("#guess").removeAttr("disabled");
+//    $("#guess").removeAttr("disabled");
   });
 
-  //##### 2. Once again why does the "count" variable need to be outside of the "makeGuess" on click function?
-var count = 0;
 
 // Set a click listener for the Make Guess button.
 // Your implementation may be different.
   $("#makeGuess").on("click", function(event) {
     event.preventDefault();
 
-    // Get the guess from the input
+    // Get the number value from the "Enter Your Guess" field
+    // *The "guess" variable here is NOT the same as the "guess" parameter
+    // on lines 27 thru 28
     var guess = $("#guess").val();
 
-
-    // Using the context of the current game, call the makeGuess() function
-    //##### 3. What is the value of "result"? Could I have used my "currentRandomNum" variable on line 79 instead?
+    // The value of the "result" variable is true when the "guess" variable is
+    // the same as the "randomNum" variable
     var result = currentGame.makeGuess(guess);
 
-
+    // Assign the "randomNum" property to a "currentRandomNum" variable
+    // for error reporting later
     var currentRandomNum = currentGame.randomNum;
 
-    // Build the list element
-
-    //##### 4. I don't understand what the tertiary operator is doing on line 85.
+    // Display the guesses inside <li> elements and it the guess random num
+    // matches the guess color text green and if not color it red
     var listElement = $("<li>").html(guess).
         css("color", result ? 'green' : 'red');
 
     // Add the list element
     $("#guessList").append(listElement);
-
-
 
     // Reset the form
     $("#guess").val("");
@@ -95,19 +88,22 @@ var count = 0;
     // Error validation message area
     var successOrVictoryMsgClick = $("#feedback");
 
-
     // Count the number of guesses until success
     var guessCountNum = $("#count");
     if(currentRandomNum != guess) {
       count++;
       guessCountNum.html(count);
+      console.log("Guess Count: " + count);
     }
 
     // Form validation if the numbers 1-100 aren't entered
     // Form submit success and error messages
-    if(isNaN(guess) || guess != Math.floor(guess) || guess > 100 || guess < 1 || guess == "") {
-      successOrVictoryMsgClick.html("Sorry, you need to enter a whole number from 1 - 100 inclusive. Please try again.");
-      // If number that is NOT 1-100 is entered then remove the blank guess which is an empty LI tag
+    if(isNaN(guess) || guess != Math.floor(guess) || guess > 100 ||
+        guess < 1 || guess == "") {
+      successOrVictoryMsgClick.html("Sorry, you need to enter a whole number " +
+          "from 1 - 100 inclusive. Please try again.");
+      // If number that is NOT 1-100 is entered then remove the blank guess
+      // which is an empty <li> element
       if(!$.trim($("selector").html())) {
         $(listElement).remove();
       }
@@ -115,23 +111,25 @@ var count = 0;
     else if(Math.abs(currentRandomNum - guess) > 30) {
       successOrVictoryMsgClick.html("You're very cold");
     }
-    else if(Math.abs(currentRandomNum - guess) < 30 && Math.abs(currentRandomNum - guess) > 15) {
+    else if(Math.abs(currentRandomNum - guess) < 30 && Math.abs(
+      currentRandomNum - guess) > 15) {
       successOrVictoryMsgClick.html("You're getting warmer");
     }
-    else if(Math.abs(currentRandomNum - guess) < 15 && Math.abs(currentRandomNum - guess) > 5) {
+    else if(Math.abs(currentRandomNum - guess) < 15 && Math.abs(
+      currentRandomNum - guess) > 5) {
       successOrVictoryMsgClick.html("You're getting hotter");
     }
-    else if(Math.abs(currentRandomNum - currentRandomNum) < 5 && Math.abs(currentRandomNum - guess) > 0) {
+    else if(Math.abs(currentRandomNum - currentRandomNum) < 5 && Math.abs(
+        currentRandomNum - guess) > 0) {
       successOrVictoryMsgClick.html("You're very hot!");
     }
 
     //Success message!
     else if(Math.abs(currentRandomNum - currentRandomNum == 0)) {
-      successOrVictoryMsgClick.html("You win! The number was " + currentRandomNum + ".");
+      successOrVictoryMsgClick.html("You win! The number was " +
+        currentRandomNum + ".");
       $("#count").html(count + 1);
     }
-
-
 
   });
   
