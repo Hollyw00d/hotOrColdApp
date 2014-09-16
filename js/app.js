@@ -36,7 +36,7 @@ $(function(){
   var count = 0;
 
   // Set a click listener for the "New Game" button
-  $("#newGame").on("click", function(event) {
+  $("#newGame").on("click", function(event) { 
     event.preventDefault();
 
     // Replace the current game with a new one
